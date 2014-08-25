@@ -17,9 +17,14 @@ http://www.cnblogs.com/xia520pi/archive/2012/06/04/2534533.html 贮备数据可�
 
 
 ## MR Unit 使用示例
-	https://cwiki.apache.org/confluence/display/MRUNIT/MRUnit+Tutorial
-	
-	
+	[MRUnit](https://cwiki.apache.org/confluence/display/MRUNIT/MRUnit+Tutorial) is testing framework for testing MapReduce programs written for running in Hadoop ecosystem. MRUnit makes testing Mapper and Reducer classes easier.
+
+	MR单元测试：
+	通过MapDriver对map的输入和输出进行单元测试
+	通过ReduceDriver对reduce的输入和输出进行单元测试
+	通过MapReduceDriver对map和reduce的输入和输出进行单元测试
+
+### 示例程序说明		
 	原始数据格式
 ``` 
 CDRID;CDRType;Phone1;Phone2;SMS Status Code
@@ -27,13 +32,6 @@ CDRID;CDRType;Phone1;Phone2;SMS Status Code
 353415;0;356857119806206;287572231184798;4
 835699;1;252280313968413;889717902341635;0
 ```
-
-Map ---> 如果CDRType字段为1，则输出<Status Code,1>键值对
-Reduce ---> 对相同Status Code的值做sum统计
-
-
-	MR单元测试：
-	通过MapDriver对map的输入和输出进行单元测试
-	通过ReduceDriver对reduce的输入和输出进行单元测试
-	通过MapReduceDriver对map和reduce的输入和输出进行单元测试
-
+	com.wankun.mr.mrtest.SMSCDRMapper 如果CDRType字段为1，则输出<Status Code,1>键值对 
+	com.wankun.mr.mrtest.SMSCDRReducer 对相同Status Code的值做sum统计
+	com.wankun.mr.mrtest.SMSCDRMapperReducerTest Map和Reduce程序的单元测试
