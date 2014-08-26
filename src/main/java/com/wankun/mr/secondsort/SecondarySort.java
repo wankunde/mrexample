@@ -46,7 +46,7 @@ public class SecondarySort {
 		public int compare(WritableComparable w1, WritableComparable w2) {
 			// 同一个组内的数据，根据第二个字段进行比较
 			if(w1.toString().split(":")[0].compareTo(w2.toString().split(":")[0])==0)
-					return w1.toString().split(":")[1].compareTo(w2.toString().split(":")[1]);
+					return -w1.toString().split(":")[1].compareTo(w2.toString().split(":")[1]);
 			// 不同组，返回组比较值
 			return w1.toString().split(":")[0].compareTo(w2.toString().split(":")[0]);
 		}
@@ -76,7 +76,12 @@ public class SecondarySort {
 		}
 	}
 
-	// 自定义reduce
+	/**
+	 * 根据第一列数据分组，同一组数据调用一次reduce，便于组内记录传递信息（必须排序），则value放在同一迭代器中，
+	* @author wankun
+	* @date 2014年8月26日
+	* @version 1.0
+	 */
 	public static class Reduce extends Reducer<Text, IntWritable, Text, IntWritable> {
 		public void setup(Context context) {
 			context.getConfiguration();
@@ -84,6 +89,7 @@ public class SecondarySort {
 		}
 
 		// 虽然只有一个reduce进程进程，但是该进程内可以进行分组，同一个组内，执行一次该函数
+		// values 在进行迭代的时候，会同步跟新对应的key值
 		public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException,
 				InterruptedException {
 			context.write(new Text("-------------------------"), new IntWritable(1));

@@ -21,8 +21,20 @@ import org.apache.hadoop.util.GenericOptionsParser;
 /**
  * 表自身关联，通过关系 child - parent 找出 grandchild - grandparent 的关系
  * 
+ * <pre>
+ * 原始数据：<f1,c1>,<f2,c2>,其中知道c1=f2,求f1-->c2的关系
+ * 
+ * Map端：
+ * 	<f1,c1> -->	<f1,(1:f1,c1)>
+ * 				<c1,(2:f1,c1)>
+ * 	<f2,c2> -->	<f2,(1:f2,c2)>
+ * 				<c2,(2:f2,c2)>
+ * Reduce端：
+ * 由于c1=f2,则<c1,(2:f1,c1)> 和 <f2,(1:f2,c2)> 会在同一个Reduce中处理，根据value值的前缀建立两个List，为List1(c2),List2(f1),两个list关联取结果得到 <f1,c2>
+ * </pre>
+ * 
  * @author wankun
- *
+ * 
  */
 public class STjoin {
 	public static int time = 0;
@@ -39,7 +51,7 @@ public class STjoin {
 			String parentname = new String();// 父母名称
 			String relationtype = new String();// 左右表标识
 			// 输入的一行预处理文本
-			StringTokenizer itr = new StringTokenizer(value.toString());
+			StringTokenizer itr = new StringTokenizer(value.toString(),"	");
 			String[] values = new String[2];
 			int i = 0;
 			while (itr.hasMoreTokens()) {

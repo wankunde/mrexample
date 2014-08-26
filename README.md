@@ -25,6 +25,17 @@ MR单元测试：
 * 通过ReduceDriver对reduce的输入和输出进行单元测试
 * 通过MapReduceDriver对map和reduce的输入和输出进行单元测试
 
+	
+### MRUnit new API
+	
+	Job job = new Job();
+	mapDriver = MapDriver.newMapDriver(mapper).withConfiguration(job.getConfiguration());
+	job.setInputFormatClass(AvroKeyInputFormat.class);
+	job.setOutputFormatClass(AvroKeyOutputFormat.class);
+	AvroJob.setInputKeySchema(job, MyAvro.SCHEMA$);
+	AvroJob.setMapOutputKeySchema(job, MyAvro.SCHEMA$);
+	AvroJob.setOutputKeySchema(job, MyAvro.SCHEMA$);
+	
 ### 示例程序说明		
 	原始数据格式
 ``` 
@@ -36,3 +47,4 @@ CDRID;CDRType;Phone1;Phone2;SMS Status Code
 	com.wankun.mr.mrtest.SMSCDRMapper 如果CDRType字段为1，则输出<Status Code,1>键值对 
 	com.wankun.mr.mrtest.SMSCDRReducer 对相同Status Code的值做sum统计
 	com.wankun.mr.mrtest.SMSCDRMapperReducerTest Map和Reduce程序的单元测试
+

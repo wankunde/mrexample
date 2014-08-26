@@ -1,4 +1,4 @@
-package com.wankun.mr.compress;
+package com.wankun.io.compress;
 
 import java.io.IOException;
 import java.net.URI;

@@ -1,4 +1,4 @@
-package com.wankun.mr.compress;
+package com.wankun.io.compress;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -18,13 +19,15 @@ import org.apache.hadoop.io.SequenceFile;
 import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.util.ReflectionUtils;
 
+import com.google.common.base.Objects.ToStringHelper;
+
 public class SequenceFileTest {
 
 	/**
-	 *  定义自己 的IO协议，实现如何输入输出
-	 *  1.这里实现Writable接口，并实现write和readFields方法
+	 * 定义自己 的IO协议，实现如何输入输出 1.这里实现Writable接口，并实现write和readFields方法
+	 * 
 	 * @author wankun
-	 *
+	 * 
 	 */
 	public static class UserWritable implements Writable, Comparable {
 		private long userId;
@@ -82,7 +85,8 @@ public class SequenceFileTest {
 
 		@Override
 		public String toString() {
-			return this.userId + "t" + this.userName + "t" + this.userAge;
+			return new ToStringBuilder(this).append("userId", this.userId).append("userName", this.userName)
+					.append("userAge", this.userAge).toString();
 		}
 
 		/**

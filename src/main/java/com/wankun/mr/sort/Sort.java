@@ -1,4 +1,4 @@
-package com.wankun.mr.hello;
+package com.wankun.mr.sort;
 
 import java.io.IOException;
 import java.net.URI;
@@ -25,8 +25,9 @@ import org.apache.hadoop.util.GenericOptionsParser;
  * hadoop默认是按照key值进行排序的，如果key为封装int的IntWritable类型，那么MapReduce按照数字大小对key排序，
  * 如果key为封装为String的Text类型，那么MapReduce按照字典顺序对字符串排序。 这里我们自定义排序规则，根据int的大小倒排序
  * 
- * @author wankun
- * 
+* @author wankun
+* @date 2014年8月26日
+* @version 1.0
  */
 public class Sort {
 
@@ -68,7 +69,7 @@ public class Sort {
 			super(IntWritable.class, true);
 		}
 
-		@SuppressWarnings("rawtypes")
+//		@SuppressWarnings("rawtypes")
 		@Override
 		public int compare(WritableComparable w1, WritableComparable w2) {
 			IntWritable int1 = (IntWritable) w1;

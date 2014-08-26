@@ -26,7 +26,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
  * @author wankun
  *
  */
-public class MySecondSort2 {
+public class SecondarySort2 {
 
 	public static String INPUT_PATH = "/tmp/input3";
 	public static String OUTPUT_PATH = "/tmp/output3";
@@ -49,14 +49,14 @@ public class MySecondSort2 {
 		}
 	}
 
-	public static class MapClass extends Mapper<LongWritable, Text, IntPair, IntWritable> {
+	public static class Map extends Mapper<LongWritable, Text, IntPair, IntWritable> {
 
 		private final IntPair key = new IntPair();
 		private final IntWritable value = new IntWritable();
 
 		@Override
 		public void map(LongWritable inKey, Text inValue, Context context) throws IOException, InterruptedException {
-			StringTokenizer itr = new StringTokenizer(inValue.toString());
+			StringTokenizer itr = new StringTokenizer(inValue.toString(),":");
 			int left = 0;
 			int right = 0;
 			if (itr.hasMoreTokens()) {
@@ -72,13 +72,14 @@ public class MySecondSort2 {
 	}
 
 	public static class Reduce extends Reducer<IntPair, IntWritable, Text, IntWritable> {
-		private static final Text SEPARATOR = new Text("------------------------------------------------");
+		private static final Text SEPARATOR = new Text("-------------------------");
 		private final Text first = new Text();
+		private IntWritable DEFAULT=new IntWritable();
 
 		@Override
 		public void reduce(IntPair key, Iterable<IntWritable> values, Context context) throws IOException,
 				InterruptedException {
-			context.write(SEPARATOR, null);
+			context.write(SEPARATOR, DEFAULT);
 			first.set(Integer.toString(key.getFirst()));
 			for (IntWritable value : values) {
 				context.write(first, value);
@@ -93,8 +94,8 @@ public class MySecondSort2 {
 		fileSystem.delete(new Path(OUTPUT_PATH), true);
 
 		Job job = new Job(conf, "secondary sort");
-		job.setJarByClass(MySecondSort2.class);
-		job.setMapperClass(MapClass.class);
+		job.setJarByClass(SecondarySort2.class);
+		job.setMapperClass(Map.class);
 		job.setReducerClass(Reduce.class);
 
 		job.setGroupingComparatorClass(GroupingComparator.class);
@@ -163,7 +164,7 @@ public class MySecondSort2 {
 			if (first != o.first) {
 				return first - o.first;
 			} else if (second != o.second) {
-				return second - o.second;
+				return -(second - o.second);
 			} else {
 				return 0;
 			}
