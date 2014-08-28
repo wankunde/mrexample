@@ -1,5 +1,5 @@
 Hadoop MapReduce程序编写
-* cache.CacheDemo 在MR中使用DistributedCache
+* [cache.CacheDemo](cache/CacheDemo.java) 在MR中使用DistributedCache
 
 1. WordCount mapreduce入门例子
 
