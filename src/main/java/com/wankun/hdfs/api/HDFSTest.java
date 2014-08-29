@@ -1,4 +1,4 @@
-package com.wankun.hdfs;
+package com.wankun.hdfs.api;
 
 import java.io.IOException;
 import java.net.URI;

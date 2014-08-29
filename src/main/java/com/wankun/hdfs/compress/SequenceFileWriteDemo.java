@@ -1,4 +1,4 @@
-package com.wankun.io.compress;
+package com.wankun.hdfs.compress;
 
 import java.io.IOException;
 import java.net.URI;
@@ -22,8 +22,10 @@ public class SequenceFileWriteDemo {
 			"Five, six, pick up sticks", "Seven, eight, lay them straight", "Nine, ten, a big fat hen" };
 
 	public static void main(String[] args) throws IOException {
+		String uri = "/tmp/writedemo";
+//		String uri = "hdfs://localhost.localdomain:8020/tmp/writedemo";
 //		String uri = "hdfs://mycluster/tmp/writedemo";
-		String uri = "file:///d:/tmp/writedemo";
+//		String uri = "file:///tmp/writedemo";
 		Configuration conf = new Configuration();
 		FileSystem fs = FileSystem.get(URI.create(uri), conf);
 		Path path = new Path(uri);

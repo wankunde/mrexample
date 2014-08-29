@@ -1,17 +1,26 @@
-Hadoop MapReduce程序编写
-* [cache.CacheDemo](cache/CacheDemo.java) 在MR中使用DistributedCache
+# Hadoop MapReduce编程
 
 1. WordCount mapreduce入门例子
 
-http://www.cnblogs.com/xia520pi/archive/2012/06/04/2534533.html 贮备数据可以到这里取
-1.1 hello.Dedup 数据去重复 
-1.2 hello.Sort hadoop数据排序，可以自定义排序规则 
+* [cache.CacheDemo](cache/CacheDemo.java) 通过API使用DistributedCache
+* [cache.CacheDemo](cache/CacheDemo2.java) 通过，命令行使用DistributedCache
+* [counter.MyCounter](counter.MyCounter.java) 在MR中自定义Counter
+* [hello.Dedup](hello.Dedup.java) 实现数据去除重复
+* [job.JobInfo](job.JobInfo.java) 在Job完成后获取Job信息
+* [join.STjoin](join.STjoin.java) 实现表的自身关联
+* [partitioner.MyPartitioner](partitioner.MyPartitioner.java) 自定义Partitioner
+* [partitioner.TotalSortMR](partitioner.TotalSortMR.java) 使用了Partitioner中的全局排序和数据采用
+* [secondsort.SecondarySort](secondsort.SecondarySort.java) 通过重写Key的比较器实现数据的二次排序
+* [secondsort.SecondarySort2](secondsort.SecondarySort2.java) 通过组合Key对象实现数据的二次排序
 
-2. WordCount2 增加partitioner,combiner的模块的使用
-3. partitioner.MyPartition2 测试partitioner的模块的使用
-4. secondsort.SecondarySort 二次排序，注释比较详细
-5. secondsort.MySecondSort2 一个比较好的二次排序的例子
-6. counter.MyCounter 一个使用自定义计数器的例子
-7. join.STjoin 表自身关联，通过关系 child - parent 找出 grandchild - grandparent 的关系
+2. MR 单元测试
+	
+MRUnit new API
 
-*  hdfs.HDFSTest hdfs文件的操作实战
+ 	Job job = new Job();
+	mapDriver = MapDriver.newMapDriver(mapper).withConfiguration(job.getConfiguration());
+	job.setInputFormatClass(AvroKeyInputFormat.class);
+	job.setOutputFormatClass(AvroKeyOutputFormat.class);
+	AvroJob.setInputKeySchema(job, MyAvro.SCHEMA$);
+	AvroJob.setMapOutputKeySchema(job, MyAvro.SCHEMA$);
+	AvroJob.setOutputKeySchema(job, MyAvro.SCHEMA$);

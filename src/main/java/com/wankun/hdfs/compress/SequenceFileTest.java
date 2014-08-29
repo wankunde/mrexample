@@ -1,4 +1,4 @@
-package com.wankun.io.compress;
+package com.wankun.hdfs.compress;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -19,7 +19,6 @@ import org.apache.hadoop.io.SequenceFile;
 import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.util.ReflectionUtils;
 
-import com.google.common.base.Objects.ToStringHelper;
 
 public class SequenceFileTest {
 

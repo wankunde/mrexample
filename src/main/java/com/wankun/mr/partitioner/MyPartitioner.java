@@ -36,7 +36,7 @@ import org.apache.hadoop.util.GenericOptionsParser;
 
  */
 
-public class MyPartitioner2 {
+public class MyPartitioner {
 	/**
 	 * 这里需要编写一个Mapper实现类，完成Map业务逻辑
 	 * 
@@ -97,7 +97,7 @@ public class MyPartitioner2 {
 			System.exit(2);
 		}
 		Job job = new Job(conf, "MyPartitioner"); // Job名字
-		job.setJarByClass(MyPartitioner2.class); // 执行的类
+		job.setJarByClass(MyPartitioner.class); // 执行的类
 		job.setMapperClass(MyMapper.class); // 指定Mapper类
 		job.setCombinerClass(MyReducer.class);
 		job.setReducerClass(MyReducer.class); // 指定reducer类

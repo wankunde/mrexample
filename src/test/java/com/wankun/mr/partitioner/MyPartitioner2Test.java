@@ -29,8 +29,8 @@ public class MyPartitioner2Test {
 
 	@Before
 	public void setUp() {
-		MyPartitioner2.MyMapper mapper = new MyPartitioner2.MyMapper();
-		MyPartitioner2.MyReducer reducer = new MyPartitioner2.MyReducer();
+		MyPartitioner.MyMapper mapper = new MyPartitioner.MyMapper();
+		MyPartitioner.MyReducer reducer = new MyPartitioner.MyReducer();
 		mapDriver = MapDriver.newMapDriver(mapper);
 		reduceDriver = ReduceDriver.newReduceDriver(reducer);
 		mapReduceDriver = MapReduceDriver.newMapReduceDriver(mapper, reducer);

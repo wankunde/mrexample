@@ -96,5 +96,10 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.wankun</groupId>
+			<artifactId>calutil</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 	</dependencies>
 </project>
