@@ -1,4 +1,5 @@
-package com.wankun.hdfs.compress;
+package com.wankun.hdfs.serialize;
+
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -9,9 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.io.LongWritable;
@@ -19,14 +18,13 @@ import org.apache.hadoop.io.SequenceFile;
 import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.util.ReflectionUtils;
 
-
-public class SequenceFileTest {
+public class WritableTest {
 
 	/**
-	 * 定义自己 的IO协议，实现如何输入输出 1.这里实现Writable接口，并实现write和readFields方法
-	 * 
+	 *  定义自己 的IO协议，实现如何输入输出
+	 *  1.这里实现Writable接口，并实现write和readFields方法
 	 * @author wankun
-	 * 
+	 *
 	 */
 	public static class UserWritable implements Writable, Comparable {
 		private long userId;
@@ -84,8 +82,7 @@ public class SequenceFileTest {
 
 		@Override
 		public String toString() {
-			return new ToStringBuilder(this).append("userId", this.userId).append("userName", this.userName)
-					.append("userAge", this.userAge).toString();
+			return this.userId + "\t" + this.userName + "\t" + this.userAge;
 		}
 
 		/**
@@ -105,16 +102,11 @@ public class SequenceFileTest {
 		 */
 		@Override
 		public int compareTo(Object obj) {
-			int result = -1;
 			if (obj instanceof UserWritable) {
 				UserWritable u1 = (UserWritable) obj;
-				if (this.userId > u1.userId) {
-					result = 1;
-				} else if (this.userId == u1.userId) {
-					result = 1;
-				}
+				return (int)(this.userId - u1.userId);
 			}
-			return result;
+			return -1;
 		}
 
 		@Override
@@ -132,22 +124,19 @@ public class SequenceFileTest {
 	 * @param datas
 	 */
 	public static void write2SequenceFile(String filePath, Configuration conf, Collection<UserWritable> datas) {
-		FileSystem fs = null;
 		SequenceFile.Writer writer = null;
 		Path path = null;
-		LongWritable idKey = new LongWritable(0);
+		LongWritable idKey = new LongWritable();
 
 		try {
-			fs = FileSystem.get(conf);
 			path = new Path(filePath);
-			writer = SequenceFile.createWriter(fs, conf, path, LongWritable.class, UserWritable.class);
+			writer = SequenceFile.createWriter(conf, SequenceFile.Writer.file(path),SequenceFile.Writer.keyClass(LongWritable.class),SequenceFile.Writer.valueClass(UserWritable.class));
 
 			for (UserWritable user : datas) {
 				idKey.set(user.getUserId()); // userID为Key
 				writer.append(idKey, user);
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			IOUtils.closeStream(writer);
@@ -163,17 +152,16 @@ public class SequenceFileTest {
 	 */
 	public static List<UserWritable> readSequenceFile(String sequeceFilePath, Configuration conf) {
 		List<UserWritable> result = null;
-		FileSystem fs = null;
 		SequenceFile.Reader reader = null;
 		Path path = null;
 		Writable key = null;
 		UserWritable value = new UserWritable();
 
 		try {
-			fs = FileSystem.get(conf);
 			result = new ArrayList<UserWritable>();
 			path = new Path(sequeceFilePath);
-			reader = new SequenceFile.Reader(fs, path, conf);
+			
+			reader = new SequenceFile.Reader(conf, SequenceFile.Reader.file(path));
 			key = (Writable) ReflectionUtils.newInstance(reader.getKeyClass(), conf); // 获得Key，也就是之前写入的userId
 			while (reader.next(key, value)) {
 				result.add(value);
@@ -181,7 +169,6 @@ public class SequenceFileTest {
 			}
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -204,7 +191,7 @@ public class SequenceFileTest {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		String filePath = "data/user.sequence"; // 文件路径
+		String filePath = "/tmp/user.sequence"; // 文件路径
 		Set<UserWritable> users = new HashSet<UserWritable>();
 		UserWritable user = null;
 		// 生成数据
