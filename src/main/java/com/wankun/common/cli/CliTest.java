@@ -1,4 +1,4 @@
-package com.wankun.apache_common.cli;
+package com.wankun.common.cli;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
