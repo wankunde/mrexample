@@ -1,4 +1,4 @@
-package com.wankun.hdfs.compress;
+package com.wankun.hdfs.lzo;
 
 import java.io.BufferedInputStream;
 
