@@ -7,7 +7,7 @@
 	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
-	<name>mr</name>
+	<name>mrexample</name>
 	<url>http://maven.apache.org</url>
 
 
@@ -128,7 +128,7 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>${junit.version}</version>
-			<scope>test</scope>
+		<!-- 	<scope>test</scope> -->
 		</dependency>
 		<dependency>
 			<groupId>com.wankun</groupId>

@@ -57,7 +57,7 @@ public class CacheDemo {
 		private void printFileContent(String filename) {
 			System.out.println("-------- cat file:" + filename + " -------------");
 			try {
-				System.out.println(new File(filename).getAbsolutePath());
+				System.out.println(new File(filename).getCanonicalPath());
 				List<String> lines = Files.readLines(new File(filename),
 						Charsets.UTF_8);
 				for (String line : lines)

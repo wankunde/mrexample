@@ -2,6 +2,7 @@ package com.wankun.mr.hello;
 import java.io.IOException;
 
 import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
@@ -14,6 +15,7 @@ import org.apache.hadoop.util.GenericOptionsParser;
 /**
  * 数据去重复
  * 原理：将整条数据记录作为同一个key，这样的数据只输出一次
+ * hadoop jar mrexample-1.0.0.jar com.wankun.mr.hello.Dedup
  * @author wankun
  *
  */
@@ -39,12 +41,15 @@ public class Dedup {
 
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
-		String[] ioArgs = new String[] { "/tmp/input4", "/tmp/output4" };
+		String[] ioArgs = new String[] { "/tmp/wankun/tmp", "/tmp/wankun/tmp2" };
 		String[] otherArgs = new GenericOptionsParser(conf, ioArgs).getRemainingArgs();
 		if (otherArgs.length != 2) {
 			System.exit(2);
 		}
-		Job job = new Job(conf, "Data Deduplication");
+		FileSystem hdfs=FileSystem.get(conf);
+		hdfs.delete(new Path(ioArgs[1]), true);
+		
+		Job job = Job.getInstance(conf, "Data Deduplication");
 		job.setJarByClass(Dedup.class);
 		// 设置Map、Combine和Reduce处理类
 		job.setMapperClass(Map.class);
