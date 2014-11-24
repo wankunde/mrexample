@@ -13,6 +13,8 @@
 * [secondsort.SecondarySort](secondsort/SecondarySort.java) 通过重写Key的比较器实现数据的二次排序
 * [secondsort.SecondarySort2](secondsort/SecondarySort2.java) 通过组合Key对象实现数据的二次排序
 
+* [decompress](secondsort) 重写InputFormat实现对tar.gz和tar.bz2文件的解压
+
 2. MR 单元测试
 	
 MRUnit new API
