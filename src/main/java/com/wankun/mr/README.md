@@ -26,3 +26,17 @@ MRUnit new API
 	AvroJob.setInputKeySchema(job, MyAvro.SCHEMA$);
 	AvroJob.setMapOutputKeySchema(job, MyAvro.SCHEMA$);
 	AvroJob.setOutputKeySchema(job, MyAvro.SCHEMA$);
+	
+## file format
+### Sequence File
+
+	> 来源：http://blog.csdn.net/xhh198781/article/details/7693358
+	
+SequenceFile文件是Hadoop用来存储二进制形式的key-value对而设计的一种平面文件(Flat File)。SequenceFile文件并不保证其存储的key-value数据是按照key的某个顺序存储的，同时不支持append操作。
+
+* Uncompressed SequenceFile
+![Uncompressed SequenceFile](/docs/pics/sequence_file1.png)
+* Record-Compressed SequenceFile
+![Record-Compressed SequenceFile](/docs/pics/sequence_file2.png)
+* Block-Compressed SequenceFile
+![Block-Compressed SequenceFile](/docs/pics/sequence_file3.png)
