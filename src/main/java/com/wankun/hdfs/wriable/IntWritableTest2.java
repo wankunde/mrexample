@@ -1,4 +1,4 @@
-package com.wankun.hdfs.serialize;
+package com.wankun.hdfs.wriable;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -11,7 +11,7 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.RawComparator;
 import org.apache.hadoop.io.WritableComparator;
 
-public class IntWritableTest {
+public class IntWritableTest2 {
 	public static void main(String[] args) throws IOException {
 		DataOutputStream dataOut = null;
 		DataInputStream dataIn = null;

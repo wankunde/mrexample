@@ -1,4 +1,4 @@
-package com.wankun.hdfs.serialize;
+package com.wankun.hdfs.wriable;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

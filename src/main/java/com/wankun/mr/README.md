@@ -40,3 +40,8 @@ SequenceFile文件是Hadoop用来存储二进制形式的key-value对而设计�
 ![Record-Compressed SequenceFile](/docs/pics/sequence_file2.png)
 * Block-Compressed SequenceFile
 ![Block-Compressed SequenceFile](/docs/pics/sequence_file3.png)
+
+### writable
+
+自定义writable对象用于读写数据
+示例完成了writable类的创建，comparable比较器的重载
