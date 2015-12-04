@@ -1,3 +1,4 @@
+
 ### GenericOptionsParser
 
 GenericOptionsParser
@@ -25,3 +26,13 @@ GenericOptionsParser
  job submission with libjars, files and archives
  
 
+# comments
+
+* eclipse中导入项目会报缺少 jdk.tools包，修改eclise.ini如下即可
+
+	openFile
+	--launcher.appendVmargs
+	-vm
+	C:\Program Files\Java\jdk1.8.0_45\bin\javaw.exe
+	-vmargs
+	-Dosgi.requiredJavaVersion=1.6
