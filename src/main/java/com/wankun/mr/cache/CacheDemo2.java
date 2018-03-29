@@ -1,11 +1,7 @@
 package com.wankun.mr.cache;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.util.List;
-import java.util.StringTokenizer;
-
+import com.google.common.base.Charsets;
+import com.google.common.io.Files;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -18,9 +14,11 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.GenericOptionsParser;
 
-import com.google.common.base.Charsets;
-import com.google.common.io.Files;
-import com.wankun.calutil.CalUtil;
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * <pre>
@@ -114,8 +112,8 @@ public class CacheDemo2 {
 			printFileContent("cachelink");
 
 			// test distribute jar
-			Long res = CalUtil.add(3l, 7l);
-			System.out.println("cal result is : " + res);
+//			Long res = CalUtil.add(3l, 7l);
+//			System.out.println("cal result is : " + res);
 
 			// test archive read
 			printFileContent("myzip.zip/zipfile");

@@ -9,7 +9,7 @@
 .settings/
 .idea
 .idea/*
-.iml
+*.iml
 *.classpath
 *.project
 /bin/
